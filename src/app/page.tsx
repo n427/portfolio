@@ -29,6 +29,9 @@ import jobflowImg  from "@/public/jobflow.png";
 import peekabooImg from "@/public/peekaboo.png";
 import produImg    from "@/public/produ.png";
 import vclImg      from "@/public/vcl.png";
+import dyrtImg     from "@/public/newDyrt.png";
+import metaGlassesImg from "@/public/newMeta.png";
+import postacareImg from "@/public/newPostacare.png";
 
 const PROJECTS = [
   {
@@ -65,6 +68,27 @@ const PROJECTS = [
     tags: ["React", "MongoDB", "Research"],
     href: "https://www.viscoglab.psych.ubc.ca/",
     image: vclImg,
+  },
+  {
+    title: "Dyrt — Waste Audit Tracking Platform",
+    desc: "Developed an audit tool for Intuit Dome and built analytics dashboards to monitor diversion metrics.",
+    tags: ["PM", "Data Analytics", "Dashboarding"],
+    href: "https://dyrt.co/",
+    image: dyrtImg
+  },
+  {
+    title: "Meta Glasses — Smart Glasses Prototypes",
+    desc: "Led a consulting team evaluating Meta smart glasses use cases by building interactive prototypes.",
+    tags: ["Strategy", "User Research", "Figma"],
+    href: "https://btg-glasses.netlify.app/",
+    image: metaGlassesImg
+  },
+  {
+    title: "PostaCare — Postnatal Depression Screening",
+    desc: "Built a postnatal depression screening platform for WIC offices, streamlining patient intake workflows.",
+    tags: ["React", "OpenAI API", "Health Tech"],
+    href: "https://n427.github.io/postacare/",
+    image: postacareImg
   },
 ];
 
@@ -564,13 +588,19 @@ function ProjectCard({ p }: { p: (typeof PROJECTS)[number] }) {
       >
         <Card className="rounded-2xl overflow-hidden bg-white/90 backdrop-blur border border-slate-200 transition-transform duration-300 group-hover:-translate-y-0.5">
           <div className="relative h-48 w-full overflow-hidden">
-            <Image
-              src={p.image}   // now a StaticImageData from the imports above
-              alt={p.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(min-width: 1024px) 33vw, 50vw"
-            />
+            {p.image ? (
+              <Image
+                src={p.image}   // now a StaticImageData from the imports above
+                alt={p.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(min-width: 1024px) 33vw, 50vw"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full bg-gradient-to-br from-slate-100 to-slate-200 text-slate-500">
+                <Sparkles className="h-12 w-12" />
+              </div>
+            )}
             <div
               className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               style={{

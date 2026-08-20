@@ -1,5 +1,35 @@
-import { describe, expect, it } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import PortfolioPage from "./page";
 import { PROJECTS } from "./projects";
+
+vi.mock("next/image", () => ({
+  default: ({
+    alt,
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) => {
+    delete props.priority;
+    // eslint-disable-next-line @next/next/no-img-element -- predictable static image test double
+    return <img alt={alt} {...props} />;
+  },
+}));
+
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: vi.fn().mockImplementation((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
+
+afterEach(cleanup);
 
 describe("portfolio content", () => {
   it("retains all eight projects in the approved order", () => {
@@ -23,5 +53,32 @@ describe("portfolio content", () => {
       expect(project.tags.length).toBeGreaterThan(0);
       expect(project.image).toBeTruthy();
     }
+  });
+});
+
+describe("PortfolioPage", () => {
+  it("renders Nicole's intro, contact links, and all projects", () => {
+    render(<PortfolioPage />);
+    expect(screen.getByRole("heading", { level: 1, name: "Hi, I'm Nicole," })).toBeVisible();
+    expect(screen.getAllByTestId("project-link")).toHaveLength(8);
+    expect(screen.getByRole("link", { name: "github" })).toHaveAttribute("href", "https://github.com/n427");
+    expect(screen.getByRole("link", { name: "linkedin" })).toHaveAttribute("href", "https://www.linkedin.com/in/nicolexzhang/");
+    expect(screen.getByRole("link", { name: "nicolexzha@gmail.com" })).toHaveAttribute("href", "mailto:nicolexzha@gmail.com");
+  });
+
+  it("reveals the matching screenshot on project focus", () => {
+    render(<PortfolioPage />);
+    const tagged = screen.getByRole("link", { name: /Tagged — Weekly Photo Challenges/ });
+    fireEvent.focus(tagged);
+    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+    fireEvent.blur(tagged);
+    expect(screen.queryByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).not.toBeInTheDocument();
+  });
+
+  it("does not render the reference author's content", () => {
+    render(<PortfolioPage />);
+    expect(screen.queryByText(/Dieter Rams/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Good design is as little design/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/writings/i)).not.toBeInTheDocument();
   });
 });

@@ -73,11 +73,11 @@ function ProjectList() {
 
   return (
     <section className="projects-section" aria-labelledby="projects-title">
-      <div>
+      <div className="section-heading">
         <h2 id="projects-title">projects</h2>
         <p>products, experiments, and tools I&apos;ve helped bring to life.</p>
       </div>
-      <ul>
+      <ul className="project-list">
         {PROJECTS.map((project) => (
           <ProjectRow key={project.title} project={project} onActive={setActiveProject} />
         ))}

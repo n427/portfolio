@@ -58,9 +58,11 @@ describe("portfolio content", () => {
 
 describe("PortfolioPage", () => {
   it("renders Nicole's intro, contact links, and all projects", () => {
-    render(<PortfolioPage />);
+    const { container } = render(<PortfolioPage />);
     expect(screen.getByRole("heading", { level: 1, name: "Hi, I'm Nicole," })).toBeVisible();
     expect(screen.getAllByTestId("project-link")).toHaveLength(8);
+    expect(container.querySelector(".section-heading")).toBeInTheDocument();
+    expect(container.querySelector(".project-list")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "github" })).toHaveAttribute("href", "https://github.com/n427");
     expect(screen.getByRole("link", { name: "linkedin" })).toHaveAttribute("href", "https://www.linkedin.com/in/nicolexzhang/");
     expect(screen.getByRole("link", { name: "nicolexzha@gmail.com" })).toHaveAttribute("href", "mailto:nicolexzha@gmail.com");

@@ -34,6 +34,7 @@ body {
 }
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .site-shell { width: min(var(--content), calc(100% - 2rem)); margin: 0 auto; padding: 7rem 0 2rem; }
 .intro h1 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 4vw, 1.8rem); line-height: 1.2; letter-spacing: -.035em; }
 .intro p { max-width: 39rem; margin: 0; color: var(--muted); font-size: 1rem; }
@@ -65,7 +66,8 @@ footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 7
   .site-shell { width: min(var(--content), calc(100% - 1.5rem)); padding-top: 4rem; }
   .section-heading { display: grid; gap: .2rem; }
   .project-row { grid-template-columns: minmax(0, 1fr) 1rem; gap: .35rem .75rem; }
-  .project-tags { grid-column: 1 / -1; white-space: normal; }
+  .project-tags { grid-column: 1 / -1; grid-row: 2; white-space: normal; }
+  .external-mark { grid-column: 2; grid-row: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

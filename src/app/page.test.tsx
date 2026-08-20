@@ -63,9 +63,23 @@ describe("PortfolioPage", () => {
     expect(screen.getAllByTestId("project-link")).toHaveLength(8);
     expect(container.querySelector(".section-heading")).toBeInTheDocument();
     expect(container.querySelector(".project-list")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "github" })).toHaveAttribute("href", "https://github.com/n427");
-    expect(screen.getByRole("link", { name: "linkedin" })).toHaveAttribute("href", "https://www.linkedin.com/in/nicolexzhang/");
+    expect(screen.getByRole("link", { name: "github opens in a new tab" })).toHaveAttribute(
+      "href",
+      "https://github.com/n427",
+    );
+    expect(screen.getByRole("link", { name: "linkedin opens in a new tab" })).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/nicolexzhang/",
+    );
     expect(screen.getByRole("link", { name: "nicolexzha@gmail.com" })).toHaveAttribute("href", "mailto:nicolexzha@gmail.com");
+
+    for (const project of PROJECTS) {
+      expect(
+        screen.getByRole("link", {
+          name: `${project.title} ${project.description} ${project.tags.join(" · ")} opens in a new tab`,
+        }),
+      ).toHaveAttribute("target", "_blank");
+    }
   });
 
   it("reveals the matching screenshot on project focus", () => {
@@ -75,6 +89,33 @@ describe("PortfolioPage", () => {
     expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
     fireEvent.blur(tagged);
     expect(screen.queryByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).not.toBeInTheDocument();
+  });
+
+  it("keeps the focused preview after a hovered project is left", () => {
+    render(<PortfolioPage />);
+    const [tagged, jobflow] = screen.getAllByTestId("project-link");
+
+    fireEvent.focus(tagged);
+    fireEvent.mouseEnter(jobflow);
+    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+
+    fireEvent.mouseLeave(jobflow);
+    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+  });
+
+  it("restores the hovered preview after focus clears and hides it only after both clear", () => {
+    render(<PortfolioPage />);
+    const [tagged, jobflow] = screen.getAllByTestId("project-link");
+
+    fireEvent.mouseEnter(tagged);
+    fireEvent.focus(jobflow);
+    expect(screen.getByRole("img", { name: "Jobflow — AI Resume Customizer preview" })).toBeVisible();
+
+    fireEvent.blur(jobflow);
+    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+
+    fireEvent.mouseLeave(tagged);
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });
 
   it("does not render the reference author's content", () => {

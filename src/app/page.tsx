@@ -20,10 +20,12 @@ function Intro() {
 
 function ProjectRow({
   project,
-  onActive,
+  onHover,
+  onFocus,
 }: {
   project: Project;
-  onActive: (project: Project | null) => void;
+  onHover: (project: Project | null) => void;
+  onFocus: (project: Project | null) => void;
 }) {
   return (
     <li>
@@ -33,10 +35,10 @@ function ProjectRow({
         href={project.href}
         target="_blank"
         rel="noreferrer"
-        onMouseEnter={() => onActive(project)}
-        onMouseLeave={() => onActive(null)}
-        onFocus={() => onActive(project)}
-        onBlur={() => onActive(null)}
+        onMouseEnter={() => onHover(project)}
+        onMouseLeave={() => onHover(null)}
+        onFocus={() => onFocus(project)}
+        onBlur={() => onFocus(null)}
       >
         <span className="project-copy">
           <strong>{project.title}</strong>
@@ -46,6 +48,7 @@ function ProjectRow({
         <span className="external-mark" aria-hidden="true">
           ↗
         </span>
+        <span className="sr-only">opens in a new tab</span>
       </a>
     </li>
   );
@@ -69,7 +72,9 @@ function ProjectPreview({ project }: { project: Project | null }) {
 }
 
 function ProjectList() {
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
+  const [focusedProject, setFocusedProject] = useState<Project | null>(null);
+  const activeProject = focusedProject ?? hoveredProject;
 
   return (
     <section className="projects-section" aria-labelledby="projects-title">
@@ -79,7 +84,12 @@ function ProjectList() {
       </div>
       <ul className="project-list">
         {PROJECTS.map((project) => (
-          <ProjectRow key={project.title} project={project} onActive={setActiveProject} />
+          <ProjectRow
+            key={project.title}
+            project={project}
+            onHover={setHoveredProject}
+            onFocus={setFocusedProject}
+          />
         ))}
       </ul>
       <ProjectPreview project={activeProject} />
@@ -95,6 +105,7 @@ function Contact() {
         Connect with me on{" "}
         <a href="https://github.com/n427" target="_blank" rel="noreferrer">
           github
+          <span className="sr-only"> opens in a new tab</span>
         </a>
         {" · "}
         <a
@@ -103,6 +114,7 @@ function Contact() {
           rel="noreferrer"
         >
           linkedin
+          <span className="sr-only"> opens in a new tab</span>
         </a>
         {" or reach me at "}
         <a href="mailto:nicolexzha@gmail.com">nicolexzha@gmail.com</a>.

@@ -13,7 +13,7 @@ import { ThemeToggle } from "./theme-toggle";
 function Intro() {
   return (
     <header className="intro">
-      <h1>Hi, I&apos;m Nicole,</h1>
+      <h1>Hi, I&apos;m Nicole!</h1>
       <p>
         I&apos;m a product-minded builder studying Computer Science &amp; Business
         Administration at USC. I work across applied AI, data products,
@@ -173,7 +173,7 @@ export default function PortfolioPage() {
       />
       <Contact />
       <footer>
-        <span>© {new Date().getFullYear()} Nicole Zhang</span>
+        <span>© 2026 Nicole Zhang</span>
         <ThemeToggle />
       </footer>
     </main>

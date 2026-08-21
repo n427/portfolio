@@ -8,4 +8,11 @@ describe("portfolio metadata", () => {
     expect(layoutSource).toContain('title: "Nicole Zhang: Product Builder"');
     expect(layoutSource).not.toContain("—");
   });
+
+  it("uses the body font in the footer and tighter contact spacing", () => {
+    const stylesheet = readFileSync("src/app/globals.css", "utf8");
+
+    expect(stylesheet).toContain(".contact-section { margin-top: 3.25rem; }");
+    expect(stylesheet).toMatch(/footer \{[^}]*margin-top: 3\.5rem;[^}]*font-family: inherit;/s);
+  });
 });

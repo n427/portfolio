@@ -38,7 +38,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline
 .site-shell { width: min(var(--content), calc(100% - 2rem)); margin: 0 auto; padding: 7rem 0 2rem; }
 .intro h1 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 4vw, 1.8rem); line-height: 1.2; letter-spacing: -.035em; }
 .intro p { max-width: 39rem; margin: 0; color: var(--muted); font-size: 1rem; }
-.work-section, .contact-section { margin-top: 5.5rem; }
+.work-section { margin-top: 5.5rem; }
+.contact-section { margin-top: 3.25rem; }
 .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .35rem; }
 .section-heading h2 { margin: 0; font-size: 1.05rem; }
 .section-heading p, .contact-section > p { margin: 0; color: var(--muted); }
@@ -55,7 +56,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline
 .project-preview { position: fixed; z-index: 10; left: calc(50% + 23rem); top: 50%; width: min(22rem, calc(50vw - 25rem)); margin: 0; transform: translateY(-50%); pointer-events: none; animation: preview-in 160ms ease-out both; }
 .project-preview img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); background: var(--soft); }
 .contact-section a { text-underline-offset: .2em; text-decoration-thickness: 1px; }
-footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 7rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: .72rem; }
+footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--muted); font-family: inherit; font-size: .72rem; }
 .theme-toggle { border: 0; padding: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
 .theme-toggle:hover { color: var(--ink); }
 @keyframes preview-in { from { opacity: 0; transform: translate(10px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }

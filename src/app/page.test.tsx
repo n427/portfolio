@@ -83,12 +83,13 @@ describe("portfolio content", () => {
 describe("PortfolioPage", () => {
   it("renders the three work sections, contact links, and all entries", () => {
     const { container } = render(<PortfolioPage />);
-    expect(screen.getByRole("heading", { level: 1, name: "Hi, I'm Nicole," })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 1, name: "Hi, I'm Nicole!" })).toBeVisible();
     expect(screen.getByRole("heading", { level: 2, name: "internships" })).toBeVisible();
     expect(screen.getByRole("heading", { level: 2, name: "research" })).toBeVisible();
     expect(screen.getByRole("heading", { level: 2, name: "projects" })).toBeVisible();
+    expect(screen.getByText("© 2026 Nicole Zhang")).toBeVisible();
     expect(screen.getAllByTestId("work-item")).toHaveLength(11);
-    expect(screen.getAllByTestId("project-link")).toHaveLength(8);
+    expect(screen.getAllByTestId("project-link")).toHaveLength(9);
     expect(container.querySelector(".section-heading")).toBeInTheDocument();
     expect(container.querySelector(".project-list")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "github opens in a new tab" })).toHaveAttribute(
@@ -100,6 +101,10 @@ describe("PortfolioPage", () => {
       "https://www.linkedin.com/in/nicolexzhang/",
     );
     expect(screen.getByRole("link", { name: "nicolexzha@gmail.com" })).toHaveAttribute("href", "mailto:nicolexzha@gmail.com");
+    expect(screen.getByRole("link", { name: /Evolution Design Lab/ })).toHaveAttribute(
+      "href",
+      "https://styalos.com",
+    );
 
     for (const project of WORK_ITEMS.filter((item) => item.href)) {
       const roleAndDate = project.role && project.date
@@ -125,7 +130,8 @@ describe("PortfolioPage", () => {
 
   it("keeps the focused preview after a hovered project is left", () => {
     render(<PortfolioPage />);
-    const [jobflow, peekaboo] = screen.getAllByTestId("project-link");
+    const jobflow = screen.getByRole("link", { name: /Jobflow: AI Resume Customizer/ });
+    const peekaboo = screen.getByRole("link", { name: /Peekaboo: AI Visibility Analytics/ });
 
     fireEvent.focus(jobflow);
     fireEvent.mouseEnter(peekaboo);
@@ -137,7 +143,8 @@ describe("PortfolioPage", () => {
 
   it("restores the hovered preview after focus clears and hides it only after both clear", () => {
     render(<PortfolioPage />);
-    const [jobflow, peekaboo] = screen.getAllByTestId("project-link");
+    const jobflow = screen.getByRole("link", { name: /Jobflow: AI Resume Customizer/ });
+    const peekaboo = screen.getByRole("link", { name: /Peekaboo: AI Visibility Analytics/ });
 
     fireEvent.mouseEnter(jobflow);
     fireEvent.focus(peekaboo);

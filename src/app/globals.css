@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --page: #f7f7f5;
+  --page: #ffffff;
   --ink: #171714;
   --muted: #6d6d66;
   --rule: #d9d9d2;
-  --soft: #ecece7;
+  --soft: #f6f6f3;
   --focus: #315c9b;
   --content: 42rem;
   color-scheme: light;
@@ -38,7 +38,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline
 .site-shell { width: min(var(--content), calc(100% - 2rem)); margin: 0 auto; padding: 7rem 0 2rem; }
 .intro h1 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 4vw, 1.8rem); line-height: 1.2; letter-spacing: -.035em; }
 .intro p { max-width: 39rem; margin: 0; color: var(--muted); font-size: 1rem; }
-.projects-section, .contact-section { margin-top: 5.5rem; }
+.work-section, .contact-section { margin-top: 5.5rem; }
 .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .35rem; }
 .section-heading h2 { margin: 0; font-size: 1.05rem; }
 .section-heading p, .contact-section > p { margin: 0; color: var(--muted); }
@@ -47,7 +47,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline
 .project-copy { display: grid; gap: .2rem; }
 .project-copy strong { font-size: .94rem; font-weight: 600; }
 .project-copy > span { color: var(--muted); font-size: .88rem; }
-.project-tags { color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: .7rem; white-space: nowrap; }
+.project-copy .work-meta { color: var(--ink); font-size: .78rem; font-weight: 500; }
+.project-tags { color: var(--muted); font-family: inherit; font-size: .78rem; font-weight: 500; white-space: nowrap; }
+.project-row-static { grid-template-columns: minmax(0, 1fr) auto; }
 .external-mark { color: var(--muted); transition: transform 150ms ease, color 150ms ease; }
 .project-row:hover .external-mark, .project-row:focus-visible .external-mark { color: var(--ink); transform: translate(2px, -2px); }
 .project-preview { position: fixed; z-index: 10; left: calc(50% + 23rem); top: 50%; width: min(22rem, calc(50vw - 25rem)); margin: 0; transform: translateY(-50%); pointer-events: none; animation: preview-in 160ms ease-out both; }

@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import PortfolioPage from "./page";
-import { PROJECTS } from "./projects";
+import { INTERNSHIPS, PROJECTS, RESEARCH, WORK_ITEMS } from "./projects";
 
 vi.mock("next/image", () => ({
   default: ({
@@ -32,34 +32,62 @@ Object.defineProperty(window, "matchMedia", {
 afterEach(cleanup);
 
 describe("portfolio content", () => {
-  it("retains all eight projects in the approved order", () => {
-    expect(PROJECTS.map((project) => project.title)).toEqual([
-      "Tagged — Weekly Photo Challenges",
-      "Jobflow — AI Resume Customizer",
-      "Peekaboo — AI Visibility Analytics",
-      "Produ — SWE Soft-Skills Evaluator",
-      "Visual Cognition Lab — Research Dashboard",
-      "Dyrt — Waste Audit Tracking Platform",
-      "Meta Glasses — Smart Glasses Prototypes",
-      "PostaCare — Postnatal Depression Screening",
+  it("groups the approved work into internships, research, and projects", () => {
+    expect(INTERNSHIPS.map((item) => item.title)).toEqual([
+      "Meridian AI",
+      "Evolution Design Lab",
+      "Jobflow: AI Resume Customizer",
+      "Peekaboo: AI Visibility Analytics",
+      "Produ: SWE Soft-Skills Evaluator",
+      "Dyrt: Waste Audit Tracking Platform",
+    ]);
+    expect(RESEARCH.map((item) => item.title)).toEqual([
+      "USC Image Processing and Informatics Lab",
+      "Visual Cognition Lab: Research Dashboard",
+    ]);
+    expect(PROJECTS.map((item) => item.title)).toEqual([
+      "Tagged: Weekly Photo Challenges",
+      "Meta Glasses: Smart Glasses Prototypes",
+      "PostaCare: Postnatal Depression Screening",
     ]);
   });
 
-  it("provides a destination, image, description, and tags for every project", () => {
-    expect(PROJECTS).toHaveLength(8);
-    for (const project of PROJECTS) {
-      expect(project.href).toMatch(/^https:\/\//);
-      expect(project.description.length).toBeGreaterThan(20);
-      expect(project.tags.length).toBeGreaterThan(0);
-      expect(project.image).toBeTruthy();
+  it("provides useful descriptions and tools without em dashes", () => {
+    expect(WORK_ITEMS).toHaveLength(11);
+    for (const item of WORK_ITEMS) {
+      expect(item.description.length).toBeGreaterThan(20);
+      expect(item.tags.length).toBeGreaterThan(0);
+      expect(JSON.stringify(item)).not.toContain("—");
     }
+  });
+
+  it("includes resume-sourced roles and dates for the new experience entries", () => {
+    expect(INTERNSHIPS[0]).toMatchObject({
+      title: "Meridian AI",
+      role: "Incoming AI Software Engineer",
+      date: "Sep 2026",
+    });
+    expect(INTERNSHIPS[1]).toMatchObject({
+      title: "Evolution Design Lab",
+      role: "Applied AI Engineer",
+      date: "May 2026 to present",
+    });
+    expect(RESEARCH[0]).toMatchObject({
+      title: "USC Image Processing and Informatics Lab",
+      role: "Incoming Machine Learning Researcher",
+      date: "Sep 2026",
+    });
   });
 });
 
 describe("PortfolioPage", () => {
-  it("renders Nicole's intro, contact links, and all projects", () => {
+  it("renders the three work sections, contact links, and all entries", () => {
     const { container } = render(<PortfolioPage />);
     expect(screen.getByRole("heading", { level: 1, name: "Hi, I'm Nicole," })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 2, name: "internships" })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 2, name: "research" })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 2, name: "projects" })).toBeVisible();
+    expect(screen.getAllByTestId("work-item")).toHaveLength(11);
     expect(screen.getAllByTestId("project-link")).toHaveLength(8);
     expect(container.querySelector(".section-heading")).toBeInTheDocument();
     expect(container.querySelector(".project-list")).toBeInTheDocument();
@@ -73,48 +101,52 @@ describe("PortfolioPage", () => {
     );
     expect(screen.getByRole("link", { name: "nicolexzha@gmail.com" })).toHaveAttribute("href", "mailto:nicolexzha@gmail.com");
 
-    for (const project of PROJECTS) {
+    for (const project of WORK_ITEMS.filter((item) => item.href)) {
+      const roleAndDate = project.role && project.date
+        ? `${project.role} · ${project.date}`
+        : project.role ?? project.date ?? "";
       expect(
         screen.getByRole("link", {
-          name: `${project.title} ${project.description} ${project.tags.join(" · ")} opens in a new tab`,
+          name: `${project.title} ${roleAndDate} ${project.description} ${project.tags.join(" · ")} opens in a new tab`.replace("  ", " "),
         }),
       ).toHaveAttribute("target", "_blank");
     }
+    expect(container.textContent).not.toContain("—");
   });
 
   it("reveals the matching screenshot on project focus", () => {
     render(<PortfolioPage />);
-    const tagged = screen.getByRole("link", { name: /Tagged — Weekly Photo Challenges/ });
+    const tagged = screen.getByRole("link", { name: /Tagged: Weekly Photo Challenges/ });
     fireEvent.focus(tagged);
-    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+    expect(screen.getByRole("img", { name: "Tagged: Weekly Photo Challenges preview" })).toBeVisible();
     fireEvent.blur(tagged);
-    expect(screen.queryByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Tagged: Weekly Photo Challenges preview" })).not.toBeInTheDocument();
   });
 
   it("keeps the focused preview after a hovered project is left", () => {
     render(<PortfolioPage />);
-    const [tagged, jobflow] = screen.getAllByTestId("project-link");
+    const [jobflow, peekaboo] = screen.getAllByTestId("project-link");
 
-    fireEvent.focus(tagged);
-    fireEvent.mouseEnter(jobflow);
-    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+    fireEvent.focus(jobflow);
+    fireEvent.mouseEnter(peekaboo);
+    expect(screen.getByRole("img", { name: "Jobflow: AI Resume Customizer preview" })).toBeVisible();
 
-    fireEvent.mouseLeave(jobflow);
-    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+    fireEvent.mouseLeave(peekaboo);
+    expect(screen.getByRole("img", { name: "Jobflow: AI Resume Customizer preview" })).toBeVisible();
   });
 
   it("restores the hovered preview after focus clears and hides it only after both clear", () => {
     render(<PortfolioPage />);
-    const [tagged, jobflow] = screen.getAllByTestId("project-link");
+    const [jobflow, peekaboo] = screen.getAllByTestId("project-link");
 
-    fireEvent.mouseEnter(tagged);
-    fireEvent.focus(jobflow);
-    expect(screen.getByRole("img", { name: "Jobflow — AI Resume Customizer preview" })).toBeVisible();
+    fireEvent.mouseEnter(jobflow);
+    fireEvent.focus(peekaboo);
+    expect(screen.getByRole("img", { name: "Peekaboo: AI Visibility Analytics preview" })).toBeVisible();
 
-    fireEvent.blur(jobflow);
-    expect(screen.getByRole("img", { name: "Tagged — Weekly Photo Challenges preview" })).toBeVisible();
+    fireEvent.blur(peekaboo);
+    expect(screen.getByRole("img", { name: "Jobflow: AI Resume Customizer preview" })).toBeVisible();
 
-    fireEvent.mouseLeave(tagged);
+    fireEvent.mouseLeave(jobflow);
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });
 

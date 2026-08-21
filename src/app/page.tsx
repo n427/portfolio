@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
-import { PROJECTS, type Project } from "./projects";
+import {
+  INTERNSHIPS,
+  PROJECTS,
+  RESEARCH,
+  type WorkItem,
+} from "./projects";
 import { ThemeToggle } from "./theme-toggle";
 
 function Intro() {
@@ -11,59 +16,76 @@ function Intro() {
       <h1>Hi, I&apos;m Nicole,</h1>
       <p>
         I&apos;m a product-minded builder studying Computer Science &amp; Business
-        Administration at USC. I design and ship consumer products, career tools,
-        analytics platforms, and research software.
+        Administration at USC. I work across applied AI, data products,
+        research software, and consumer experiences.
       </p>
     </header>
   );
 }
 
-function ProjectRow({
-  project,
+function WorkRow({
+  item,
   onHover,
   onFocus,
 }: {
-  project: Project;
-  onHover: (project: Project | null) => void;
-  onFocus: (project: Project | null) => void;
+  item: WorkItem;
+  onHover: (item: WorkItem | null) => void;
+  onFocus: (item: WorkItem | null) => void;
 }) {
+  const content = (
+    <>
+      <span className="project-copy">
+        <strong>{item.title}</strong>
+        {(item.role || item.date) && (
+          <span className="work-meta">
+            {item.role}
+            {item.role && item.date ? " · " : ""}
+            {item.date}
+          </span>
+        )}
+        <span>{item.description}</span>
+      </span>
+      <span className="project-tags">{item.tags.join(" · ")}</span>
+      {item.href && (
+        <>
+          <span className="external-mark" aria-hidden="true">↗</span>
+          <span className="sr-only">opens in a new tab</span>
+        </>
+      )}
+    </>
+  );
+
   return (
-    <li>
-      <a
-        data-testid="project-link"
-        className="project-row"
-        href={project.href}
-        target="_blank"
-        rel="noreferrer"
-        onMouseEnter={() => onHover(project)}
-        onMouseLeave={() => onHover(null)}
-        onFocus={() => onFocus(project)}
-        onBlur={() => onFocus(null)}
-      >
-        <span className="project-copy">
-          <strong>{project.title}</strong>
-          <span>{project.description}</span>
-        </span>
-        <span className="project-tags">{project.tags.join(" · ")}</span>
-        <span className="external-mark" aria-hidden="true">
-          ↗
-        </span>
-        <span className="sr-only">opens in a new tab</span>
-      </a>
+    <li data-testid="work-item">
+      {item.href ? (
+        <a
+          data-testid="project-link"
+          className="project-row"
+          href={item.href}
+          target="_blank"
+          rel="noreferrer"
+          onMouseEnter={() => onHover(item.image ? item : null)}
+          onMouseLeave={() => onHover(null)}
+          onFocus={() => onFocus(item.image ? item : null)}
+          onBlur={() => onFocus(null)}
+        >
+          {content}
+        </a>
+      ) : (
+        <div className="project-row project-row-static">{content}</div>
+      )}
     </li>
   );
 }
 
-function ProjectPreview({ project }: { project: Project | null }) {
-  if (!project) {
-    return null;
-  }
+function WorkPreview({ item }: { item: WorkItem | null }) {
+  if (!item?.image) return null;
 
   return (
     <figure className="project-preview" aria-live="polite">
       <Image
-        src={project.image}
-        alt={`${project.title} preview`}
+        src={item.image}
+        alt={`${item.title} preview`}
         sizes="(min-width: 900px) 22rem, 0px"
         priority={false}
       />
@@ -71,28 +93,38 @@ function ProjectPreview({ project }: { project: Project | null }) {
   );
 }
 
-function ProjectList() {
-  const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
-  const [focusedProject, setFocusedProject] = useState<Project | null>(null);
-  const activeProject = focusedProject ?? hoveredProject;
+function WorkSection({
+  id,
+  title,
+  description,
+  items,
+}: {
+  id: string;
+  title: string;
+  description: string;
+  items: readonly WorkItem[];
+}) {
+  const [hoveredItem, setHoveredItem] = useState<WorkItem | null>(null);
+  const [focusedItem, setFocusedItem] = useState<WorkItem | null>(null);
+  const activeItem = focusedItem ?? hoveredItem;
 
   return (
-    <section className="projects-section" aria-labelledby="projects-title">
+    <section className="work-section" aria-labelledby={`${id}-title`}>
       <div className="section-heading">
-        <h2 id="projects-title">projects</h2>
-        <p>products, experiments, and tools I&apos;ve helped bring to life.</p>
+        <h2 id={`${id}-title`}>{title}</h2>
+        <p>{description}</p>
       </div>
       <ul className="project-list">
-        {PROJECTS.map((project) => (
-          <ProjectRow
-            key={project.title}
-            project={project}
-            onHover={setHoveredProject}
-            onFocus={setFocusedProject}
+        {items.map((item) => (
+          <WorkRow
+            key={item.title}
+            item={item}
+            onHover={setHoveredItem}
+            onFocus={setFocusedItem}
           />
         ))}
       </ul>
-      <ProjectPreview project={activeProject} />
+      <WorkPreview item={activeItem} />
     </section>
   );
 }
@@ -104,17 +136,11 @@ function Contact() {
       <p>
         Connect with me on{" "}
         <a href="https://github.com/n427" target="_blank" rel="noreferrer">
-          github
-          <span className="sr-only"> opens in a new tab</span>
+          github<span className="sr-only"> opens in a new tab</span>
         </a>
         {" · "}
-        <a
-          href="https://www.linkedin.com/in/nicolexzhang/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          linkedin
-          <span className="sr-only"> opens in a new tab</span>
+        <a href="https://www.linkedin.com/in/nicolexzhang/" target="_blank" rel="noreferrer">
+          linkedin<span className="sr-only"> opens in a new tab</span>
         </a>
         {" or reach me at "}
         <a href="mailto:nicolexzha@gmail.com">nicolexzha@gmail.com</a>.
@@ -127,7 +153,24 @@ export default function PortfolioPage() {
   return (
     <main className="site-shell">
       <Intro />
-      <ProjectList />
+      <WorkSection
+        id="internships"
+        title="internships"
+        description="teams where I built, shipped, and learned."
+        items={INTERNSHIPS}
+      />
+      <WorkSection
+        id="research"
+        title="research"
+        description="tools and systems built alongside researchers."
+        items={RESEARCH}
+      />
+      <WorkSection
+        id="projects"
+        title="projects"
+        description="products and experiments I helped bring to life."
+        items={PROJECTS}
+      />
       <Contact />
       <footer>
         <span>© {new Date().getFullYear()} Nicole Zhang</span>

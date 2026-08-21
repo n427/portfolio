@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { THEME_BOOTSTRAP_SCRIPT } from "./theme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,15 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nicole's Portfolio",
-  description: "Nicole Zhang",
+  title: "Nicole Zhang: Product Builder",
+  description: "Selected products, experiments, and software by Nicole Zhang.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: THEME_BOOTSTRAP_SCRIPT,
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
-

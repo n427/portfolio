@@ -7,6 +7,8 @@
   --rule: #d9d9d2;
   --soft: #f6f6f3;
   --focus: #315c9b;
+  --web-line: rgba(23, 23, 20, .055);
+  --web-point: rgba(23, 23, 20, .12);
   --content: 42rem;
   color-scheme: light;
 }
@@ -18,6 +20,8 @@
   --rule: #3b3b37;
   --soft: #242422;
   --focus: #8db4ec;
+  --web-line: rgba(241, 241, 236, .07);
+  --web-point: rgba(241, 241, 236, .14);
   color-scheme: dark;
 }
 
@@ -35,7 +39,8 @@ body {
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-.site-shell { width: min(var(--content), calc(100% - 2rem)); margin: 0 auto; padding: 7rem 0 2rem; }
+.ambient-web { position: fixed; z-index: 0; inset: 0; display: block; pointer-events: none; }
+.site-shell { position: relative; z-index: 1; width: min(var(--content), calc(100% - 2rem)); margin: 0 auto; padding: 7rem 0 2rem; }
 .intro h1 { margin: 0 0 .9rem; font-size: clamp(1.45rem, 4vw, 1.8rem); line-height: 1.2; letter-spacing: -.035em; }
 .intro p { max-width: 39rem; margin: 0; color: var(--muted); font-size: 1rem; }
 .work-section { margin-top: 5.5rem; }
@@ -74,6 +79,11 @@ footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .ambient-web { display: none; }
   .project-preview { animation: none; }
   .external-mark { transition: none; }
+}
+
+@media (pointer: coarse) {
+  .ambient-web { display: none; }
 }

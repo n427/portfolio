@@ -9,6 +9,7 @@ import {
   type WorkItem,
 } from "./projects";
 import { ThemeToggle } from "./theme-toggle";
+import { AmbientWeb } from "./ambient-web";
 
 function Intro() {
   return (
@@ -151,8 +152,10 @@ function Contact() {
 
 export default function PortfolioPage() {
   return (
-    <main className="site-shell">
-      <Intro />
+    <>
+      <AmbientWeb />
+      <main className="site-shell">
+        <Intro />
       <WorkSection
         id="internships"
         title="internships"
@@ -172,10 +175,11 @@ export default function PortfolioPage() {
         items={PROJECTS}
       />
       <Contact />
-      <footer>
-        <span>© 2026 Nicole Zhang</span>
-        <ThemeToggle />
-      </footer>
-    </main>
+        <footer>
+          <span>© 2026 Nicole Zhang</span>
+          <ThemeToggle />
+        </footer>
+      </main>
+    </>
   );
 }

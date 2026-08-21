@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nicole Zhang: Product Builder",
+  title: "Nicole Zhang",
   description: "Selected products, experiments, and software by Nicole Zhang.",
 };
 

@@ -28,7 +28,7 @@ export const INTERNSHIPS = [
   },
   {
     title: "Evolution Design Lab",
-    href: "https://styalos.com",
+    href: "https://www.stylaos.com/",
     role: "Applied AI Engineer",
     date: "May 2026 to present",
     description: "Built semantic image search for 1,000+ material swatches and automated AI workflows for renders, design breakdowns, and sketches.",

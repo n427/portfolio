@@ -5,7 +5,7 @@ describe("portfolio metadata", () => {
   it("does not use em dashes in the browser title", () => {
     const layoutSource = readFileSync("src/app/layout.tsx", "utf8");
 
-    expect(layoutSource).toContain('title: "Nicole Zhang: Product Builder"');
+    expect(layoutSource).toContain('title: "Nicole Zhang"');
     expect(layoutSource).not.toContain("—");
   });
 

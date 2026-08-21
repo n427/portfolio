@@ -103,7 +103,7 @@ describe("PortfolioPage", () => {
     expect(screen.getByRole("link", { name: "nicolexzha@gmail.com" })).toHaveAttribute("href", "mailto:nicolexzha@gmail.com");
     expect(screen.getByRole("link", { name: /Evolution Design Lab/ })).toHaveAttribute(
       "href",
-      "https://styalos.com",
+      "https://www.stylaos.com/",
     );
 
     for (const project of WORK_ITEMS.filter((item) => item.href)) {

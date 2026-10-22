@@ -30,12 +30,11 @@ export const EDUCATION = [
 
 export const EXPERIENCE = [
   {
-    title: "StudyFetch",
+    title: "Meridian Inc",
     role: "Incoming AI Product Management Intern",
-    date: "Jan 2027",
-    description: "Joining the product team in Los Angeles to help shape and ship AI learning products.",
+    date: "2027",
+    description: "Joining the product team to help shape and ship AI products.",
     tags: ["Product Management", "Applied AI"],
-    href: "https://www.studyfetch.com/",
   },
   {
     title: "Business Technology Group: Meta Glasses Strategy",
@@ -129,6 +128,7 @@ export const PROJECTS = [
   },
   {
     title: "PostaCare: Postnatal Depression Screening",
+    role: "Expanding to more sites",
     description: "Redesigned a screening workflow into a React tablet app across 10 WIC offices, processing 200+ assessments and cutting screening time by 70%.",
     tags: ["React", "Python", "Health Tech"],
     href: "https://n427.github.io/postacare/",

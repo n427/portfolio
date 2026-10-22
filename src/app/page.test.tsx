@@ -37,7 +37,7 @@ describe("portfolio content", () => {
       "University of Southern California",
     ]);
     expect(EXPERIENCE.map((item) => item.title)).toEqual([
-      "StudyFetch",
+      "Meridian Inc",
       "Business Technology Group: Meta Glasses Strategy",
       "Evolution Design Lab",
       "Dyrt: Waste Audit Tracking Platform",
@@ -73,9 +73,9 @@ describe("portfolio content", () => {
       tags: ["GPA 3.84"],
     });
     expect(EXPERIENCE[0]).toMatchObject({
-      title: "StudyFetch",
+      title: "Meridian Inc",
       role: "Incoming AI Product Management Intern",
-      date: "Jan 2027",
+      date: "2027",
     });
     expect(EXPERIENCE[2]).toMatchObject({
       title: "Evolution Design Lab",
@@ -100,7 +100,7 @@ describe("PortfolioPage", () => {
     expect(screen.getByRole("heading", { level: 2, name: "projects" })).toBeVisible();
     expect(screen.getByText("© 2026 Nicole Zhang")).toBeVisible();
     expect(screen.getAllByTestId("work-item")).toHaveLength(14);
-    expect(screen.getAllByTestId("project-link")).toHaveLength(13);
+    expect(screen.getAllByTestId("project-link")).toHaveLength(12);
     expect(container.querySelector(".section-heading")).toBeInTheDocument();
     expect(container.querySelector(".project-list")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "github opens in a new tab" })).toHaveAttribute(

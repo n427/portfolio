@@ -1,19 +1,8 @@
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import PortfolioPage from "./page";
 import { EDUCATION, EXPERIENCE, PROJECTS, RESEARCH, WORK_ITEMS } from "./projects";
-
-vi.mock("next/image", () => ({
-  default: ({
-    alt,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) => {
-    delete props.priority;
-    // eslint-disable-next-line @next/next/no-img-element -- predictable static image test double
-    return <img alt={alt} {...props} />;
-  },
-}));
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,
@@ -130,43 +119,8 @@ describe("PortfolioPage", () => {
     expect(container.textContent).not.toContain("—");
   });
 
-  it("reveals the matching screenshot on project focus", () => {
-    render(<PortfolioPage />);
-    const tagged = screen.getByRole("link", { name: /Tagged: Weekly Photo Challenges/ });
-    fireEvent.focus(tagged);
-    expect(screen.getByRole("img", { name: "Tagged: Weekly Photo Challenges preview" })).toBeVisible();
-    fireEvent.blur(tagged);
-    expect(screen.queryByRole("img", { name: "Tagged: Weekly Photo Challenges preview" })).not.toBeInTheDocument();
-  });
 
-  it("keeps the focused preview after a hovered project is left", () => {
-    render(<PortfolioPage />);
-    const jobflow = screen.getByRole("link", { name: /Jobflow: AI Resume Customizer/ });
-    const peekaboo = screen.getByRole("link", { name: /Peekaboo: AI Visibility Analytics/ });
 
-    fireEvent.focus(jobflow);
-    fireEvent.mouseEnter(peekaboo);
-    expect(screen.getByRole("img", { name: "Jobflow: AI Resume Customizer preview" })).toBeVisible();
-
-    fireEvent.mouseLeave(peekaboo);
-    expect(screen.getByRole("img", { name: "Jobflow: AI Resume Customizer preview" })).toBeVisible();
-  });
-
-  it("restores the hovered preview after focus clears and hides it only after both clear", () => {
-    render(<PortfolioPage />);
-    const jobflow = screen.getByRole("link", { name: /Jobflow: AI Resume Customizer/ });
-    const peekaboo = screen.getByRole("link", { name: /Peekaboo: AI Visibility Analytics/ });
-
-    fireEvent.mouseEnter(jobflow);
-    fireEvent.focus(peekaboo);
-    expect(screen.getByRole("img", { name: "Peekaboo: AI Visibility Analytics preview" })).toBeVisible();
-
-    fireEvent.blur(peekaboo);
-    expect(screen.getByRole("img", { name: "Jobflow: AI Resume Customizer preview" })).toBeVisible();
-
-    fireEvent.mouseLeave(jobflow);
-    expect(screen.queryByRole("img")).not.toBeInTheDocument();
-  });
 
   it("does not render the reference author's content", () => {
     render(<PortfolioPage />);

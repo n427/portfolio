@@ -58,17 +58,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline
 .project-row-static { grid-template-columns: minmax(0, 1fr) auto; }
 .external-mark { color: var(--muted); transition: transform 150ms ease, color 150ms ease; }
 .project-row:hover .external-mark, .project-row:focus-visible .external-mark { color: var(--ink); transform: translate(2px, -2px); }
-.project-preview { position: fixed; z-index: 10; left: calc(50% + 23rem); top: 50%; width: min(22rem, calc(50vw - 25rem)); margin: 0; transform: translateY(-50%); pointer-events: none; animation: preview-in 160ms ease-out both; }
-.project-preview img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); background: var(--soft); }
 .contact-section a { text-underline-offset: .2em; text-decoration-thickness: 1px; }
 footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--muted); font-family: inherit; font-size: .72rem; }
 .theme-toggle { border: 0; padding: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
 .theme-toggle:hover { color: var(--ink); }
-@keyframes preview-in { from { opacity: 0; transform: translate(10px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
-
-@media (max-width: 899px) {
-  .project-preview { display: none; }
-}
 
 @media (max-width: 639px) {
   .site-shell { width: min(var(--content), calc(100% - 1.5rem)); padding-top: 4rem; }
@@ -80,7 +73,6 @@ footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3
 
 @media (prefers-reduced-motion: reduce) {
   .ambient-web { display: none; }
-  .project-preview { animation: none; }
   .external-mark { transition: none; }
 }
 

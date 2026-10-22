@@ -1,13 +1,3 @@
-import type { StaticImageData } from "next/image";
-import taggedImg from "@/public/tagged.png";
-import jobflowImg from "@/public/jobflow.png";
-import peekabooImg from "@/public/peekaboo.png";
-import produImg from "@/public/produ.png";
-import vclImg from "@/public/vcl.png";
-import dyrtImg from "@/public/newDyrt.png";
-import metaGlassesImg from "@/public/newMeta.png";
-import postacareImg from "@/public/newPostacare.png";
-
 export type WorkItem = {
   title: string;
   description: string;
@@ -15,7 +5,6 @@ export type WorkItem = {
   role?: string;
   date?: string;
   href?: string;
-  image?: StaticImageData;
 };
 
 export const EDUCATION = [
@@ -43,7 +32,6 @@ export const EXPERIENCE = [
     description: "Lead a 4-person team advising Meta on emerging product strategy, structuring 10+ Meta Glasses opportunities by customer value, market potential, and technical feasibility.",
     tags: ["Strategy", "User Research", "Prototyping"],
     href: "https://btg-glasses.netlify.app/",
-    image: metaGlassesImg,
   },
   {
     title: "Evolution Design Lab",
@@ -60,7 +48,6 @@ export const EXPERIENCE = [
     description: "Architected a SQL data model processing 1,500+ monthly records and shipped real-time dashboards used by 10 venue managers.",
     tags: ["SQL", "Data Products", "Analytics"],
     href: "https://dyrt.co/",
-    image: dyrtImg,
   },
   {
     title: "USC Annenberg, Dean's Office",
@@ -77,7 +64,6 @@ export const EXPERIENCE = [
     description: "Built a workforce analytics platform for 30+ users, serverless ETL pipelines, and automated performance summaries from unstructured feedback.",
     tags: ["React", "Python", "Supabase"],
     href: "https://tryprodu.com/",
-    image: produImg,
   },
   {
     title: "Jobflow: AI Resume Customizer",
@@ -86,7 +72,6 @@ export const EXPERIENCE = [
     description: "Integrated a vision-language model into the resume customization workflow and turned analysis of 25+ platforms into product insights.",
     tags: ["Python", "JavaScript", "Vision-Language Models"],
     href: "https://www.myjobflow.com",
-    image: jobflowImg,
   },
   {
     title: "Peekaboo: AI Visibility Analytics",
@@ -95,7 +80,6 @@ export const EXPERIENCE = [
     description: "Turned 1,000+ weekly visibility data points across 30+ accounts into positioning and go-to-market recommendations.",
     tags: ["Strategy", "Growth", "AEO"],
     href: "https://www.aipeekaboo.com/",
-    image: peekabooImg,
   },
 ] as const satisfies readonly WorkItem[];
 
@@ -113,7 +97,6 @@ export const RESEARCH = [
     description: "Built the University of British Columbia lab's platform for researchers to track and share their progress.",
     tags: ["React", "MongoDB", "Research"],
     href: "https://www.viscoglab.psych.ubc.ca/",
-    image: vclImg,
   },
 ] as const satisfies readonly WorkItem[];
 
@@ -132,14 +115,12 @@ export const PROJECTS = [
     description: "Redesigned a screening workflow into a React tablet app across 10 WIC offices, processing 200+ assessments and cutting screening time by 70%.",
     tags: ["React", "Python", "Health Tech"],
     href: "https://n427.github.io/postacare/",
-    image: postacareImg,
   },
   {
     title: "Tagged: Weekly Photo Challenges",
     description: "Social app with server-based tags, streaks, punishments, and a Yearbook archive.",
     tags: ["SwiftUI", "Firebase", "Cloud Functions"],
     href: "https://apps.apple.com/ca/app/tagged/id6749673242",
-    image: taggedImg,
   },
 ] as const satisfies readonly WorkItem[];
 

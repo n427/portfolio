@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import {
   EDUCATION,
   EXPERIENCE,
@@ -25,15 +24,7 @@ function Intro() {
   );
 }
 
-function WorkRow({
-  item,
-  onHover,
-  onFocus,
-}: {
-  item: WorkItem;
-  onHover: (item: WorkItem | null) => void;
-  onFocus: (item: WorkItem | null) => void;
-}) {
+function WorkRow({ item }: { item: WorkItem }) {
   const content = (
     <>
       <span className="project-copy">
@@ -66,10 +57,6 @@ function WorkRow({
           href={item.href}
           target="_blank"
           rel="noreferrer"
-          onMouseEnter={() => onHover(item.image ? item : null)}
-          onMouseLeave={() => onHover(null)}
-          onFocus={() => onFocus(item.image ? item : null)}
-          onBlur={() => onFocus(null)}
         >
           {content}
         </a>
@@ -77,21 +64,6 @@ function WorkRow({
         <div className="project-row project-row-static">{content}</div>
       )}
     </li>
-  );
-}
-
-function WorkPreview({ item }: { item: WorkItem | null }) {
-  if (!item?.image) return null;
-
-  return (
-    <figure className="project-preview" aria-live="polite">
-      <Image
-        src={item.image}
-        alt={`${item.title} preview`}
-        sizes="(min-width: 900px) 22rem, 0px"
-        priority={false}
-      />
-    </figure>
   );
 }
 
@@ -106,10 +78,6 @@ function WorkSection({
   description: string;
   items: readonly WorkItem[];
 }) {
-  const [hoveredItem, setHoveredItem] = useState<WorkItem | null>(null);
-  const [focusedItem, setFocusedItem] = useState<WorkItem | null>(null);
-  const activeItem = focusedItem ?? hoveredItem;
-
   return (
     <section className="work-section" aria-labelledby={`${id}-title`}>
       <div className="section-heading">
@@ -118,15 +86,9 @@ function WorkSection({
       </div>
       <ul className="project-list">
         {items.map((item) => (
-          <WorkRow
-            key={item.title}
-            item={item}
-            onHover={setHoveredItem}
-            onFocus={setFocusedItem}
-          />
+          <WorkRow key={item.title} item={item} />
         ))}
       </ul>
-      <WorkPreview item={activeItem} />
     </section>
   );
 }

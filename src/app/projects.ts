@@ -31,10 +31,10 @@ export const EDUCATION = [
 export const EXPERIENCE = [
   {
     title: "Meridian Inc",
-    role: "Incoming AI Product Management Intern",
+    role: "Incoming AI Software Engineer",
     date: "2027",
-    description: "Joining the product team to help shape and ship AI products.",
-    tags: ["Product Management", "Applied AI"],
+    description: "Joining Meridian to build and ship applied AI systems in a production engineering environment.",
+    tags: ["AI Engineering", "Software Engineering", "Python"],
   },
   {
     title: "Business Technology Group: Meta Glasses Strategy",

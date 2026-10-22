@@ -74,7 +74,7 @@ describe("portfolio content", () => {
     });
     expect(EXPERIENCE[0]).toMatchObject({
       title: "Meridian Inc",
-      role: "Incoming AI Product Management Intern",
+      role: "Incoming AI Software Engineer",
       date: "2027",
     });
     expect(EXPERIENCE[2]).toMatchObject({

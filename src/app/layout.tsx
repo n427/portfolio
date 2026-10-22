@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { THEME_BOOTSTRAP_SCRIPT } from "./theme";
+import { UMAMI_CONFIG } from "./umami";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +30,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         {children}
+        {UMAMI_CONFIG && (
+          <Script
+            src={UMAMI_CONFIG.src}
+            data-website-id={UMAMI_CONFIG.websiteId}
+            data-domains={UMAMI_CONFIG.domains}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );

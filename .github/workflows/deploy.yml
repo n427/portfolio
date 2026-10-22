@@ -27,6 +27,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Public, not secret: the id ships in the page HTML.
+          # Set these under Settings > Secrets and variables > Actions > Variables.
+          NEXT_PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.UMAMI_WEBSITE_ID }}
+          NEXT_PUBLIC_UMAMI_SCRIPT_URL: ${{ vars.UMAMI_SCRIPT_URL }}
+          NEXT_PUBLIC_UMAMI_DOMAINS: ${{ vars.UMAMI_DOMAINS }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

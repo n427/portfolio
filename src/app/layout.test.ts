@@ -9,6 +9,14 @@ describe("portfolio metadata", () => {
     expect(layoutSource).not.toContain("—");
   });
 
+  it("renders the Umami tag only when a website id is configured", () => {
+    const layoutSource = readFileSync("src/app/layout.tsx", "utf8");
+
+    expect(layoutSource).toContain("{UMAMI_CONFIG && (");
+    expect(layoutSource).toContain('data-website-id={UMAMI_CONFIG.websiteId}');
+    expect(layoutSource).toContain('strategy="afterInteractive"');
+  });
+
   it("uses the body font in the footer and tighter contact spacing", () => {
     const stylesheet = readFileSync("src/app/globals.css", "utf8");
 

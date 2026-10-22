@@ -18,66 +18,96 @@ export type WorkItem = {
   image?: StaticImageData;
 };
 
-export const INTERNSHIPS = [
+export const EDUCATION = [
   {
-    title: "Meridian AI",
-    role: "Incoming AI Software Engineer",
-    date: "Sep 2026",
-    description: "Joining Meridian AI to build and ship applied AI systems in a production engineering environment.",
-    tags: ["AI Engineering", "Software Engineering", "Python"],
+    title: "University of Southern California",
+    role: "B.S. Computer Science and Business Administration",
+    date: "Expected May 2028",
+    description: "CURVE Research Scholar, W.V.T. Rusch Engineering Scholar, McKinsey Case Competition winner, and Marshall AI Product Innovation Competition winner.",
+    tags: ["GPA 3.84"],
+  },
+] as const satisfies readonly WorkItem[];
+
+export const EXPERIENCE = [
+  {
+    title: "StudyFetch",
+    role: "Incoming AI Product Management Intern",
+    date: "Jan 2027",
+    description: "Joining the product team in Los Angeles to help shape and ship AI learning products.",
+    tags: ["Product Management", "Applied AI"],
+    href: "https://www.studyfetch.com/",
+  },
+  {
+    title: "Business Technology Group: Meta Glasses Strategy",
+    role: "Strategy Consultant",
+    date: "Sep 2025 to present",
+    description: "Lead a 4-person team advising Meta on emerging product strategy, structuring 10+ Meta Glasses opportunities by customer value, market potential, and technical feasibility.",
+    tags: ["Strategy", "User Research", "Prototyping"],
+    href: "https://btg-glasses.netlify.app/",
+    image: metaGlassesImg,
   },
   {
     title: "Evolution Design Lab",
-    href: "https://www.stylaos.com/",
-    role: "Applied AI Engineer",
-    date: "May 2026 to present",
-    description: "Built semantic image search for 1,000+ material swatches and automated AI workflows for renders, design breakdowns, and sketches.",
+    role: "Applied AI Engineer Intern",
+    date: "May 2026 to Sep 2026",
+    description: "Built Python and OpenCV semantic image search across 1,000+ material swatches, cutting retrieval from minutes to seconds.",
     tags: ["Python", "OpenCV", "Vision Models"],
+    href: "https://www.stylaos.com/",
+  },
+  {
+    title: "Dyrt: Waste Audit Tracking Platform",
+    role: "Software Engineer Intern, Data Products",
+    date: "Jan 2026 to Sep 2026",
+    description: "Architected a SQL data model processing 1,500+ monthly records and shipped real-time dashboards used by 10 venue managers.",
+    tags: ["SQL", "Data Products", "Analytics"],
+    href: "https://dyrt.co/",
+    image: dyrtImg,
+  },
+  {
+    title: "USC Annenberg, Dean's Office",
+    role: "Strategy and Automation Analyst",
+    date: "Apr 2026 to Aug 2026",
+    description: "Automated monthly budgeting into 30 recurring spreadsheets and rebuilt peer reflection distribution for 200 students.",
+    tags: ["Automation", "AI Workflows", "Operations"],
+    href: "https://annenberg.usc.edu/",
+  },
+  {
+    title: "Produ: SWE Soft-Skills Evaluator",
+    role: "Full-Stack Software Engineer Intern",
+    date: "Jun 2025 to Aug 2025",
+    description: "Built a workforce analytics platform for 30+ users, serverless ETL pipelines, and automated performance summaries from unstructured feedback.",
+    tags: ["React", "Python", "Supabase"],
+    href: "https://tryprodu.com/",
+    image: produImg,
   },
   {
     title: "Jobflow: AI Resume Customizer",
-    role: "Software Engineer, AI Products",
+    role: "Software Engineer Intern, AI Products",
     date: "Jun 2025 to Aug 2025",
-    description: "Built AI personalization features and integrated a vision-language model into a resume customization workflow.",
+    description: "Integrated a vision-language model into the resume customization workflow and turned analysis of 25+ platforms into product insights.",
     tags: ["Python", "JavaScript", "Vision-Language Models"],
     href: "https://www.myjobflow.com",
     image: jobflowImg,
   },
   {
     title: "Peekaboo: AI Visibility Analytics",
-    role: "Product and Growth Consultant",
-    description: "Worked on audits, competitive analysis, and ranking visibility for an AI search analytics platform.",
-    tags: ["Consulting", "Growth", "AEO"],
+    role: "Strategy and Growth Analyst",
+    date: "Jun 2025 to Aug 2025",
+    description: "Turned 1,000+ weekly visibility data points across 30+ accounts into positioning and go-to-market recommendations.",
+    tags: ["Strategy", "Growth", "AEO"],
     href: "https://www.aipeekaboo.com/",
     image: peekabooImg,
-  },
-  {
-    title: "Produ: SWE Soft-Skills Evaluator",
-    role: "Full-Stack Software Engineer",
-    date: "Jun 2025 to Aug 2025",
-    description: "Built a workforce analytics platform, automated performance summaries, and created data pipelines for real-time feedback analysis.",
-    tags: ["React", "Python", "Supabase"],
-    href: "https://tryprodu.com/",
-    image: produImg,
-  },
-  {
-    title: "Dyrt: Waste Audit Tracking Platform",
-    role: "Software Engineer, Data Products",
-    date: "Jan 2026 to present",
-    description: "Built SQL data infrastructure and real-time dashboards used by venue teams to monitor waste diversion metrics.",
-    tags: ["SQL", "Data Products", "Analytics"],
-    href: "https://dyrt.co/",
-    image: dyrtImg,
   },
 ] as const satisfies readonly WorkItem[];
 
 export const RESEARCH = [
   {
     title: "USC Image Processing and Informatics Lab",
-    role: "Incoming Machine Learning Researcher",
-    date: "Sep 2026",
+    role: "Machine Learning Researcher",
+    date: "Sep 2026 to present",
     description: "CURVE research on knowledge-based radiation therapy planning for head and neck cancer using multi-organ constellation matching.",
     tags: ["Machine Learning", "Medical Imaging", "Research"],
+    href: "https://ipilab.usc.edu/",
   },
   {
     title: "Visual Cognition Lab: Research Dashboard",
@@ -90,30 +120,32 @@ export const RESEARCH = [
 
 export const PROJECTS = [
   {
+    title: "Flipd: USC Student Marketplace",
+    role: "Founder",
+    date: "Launched May 2026",
+    description: "Buy and sell marketplace for USC students with student email verification, passwordless sign-in, and an AI safety layer that scores profiles.",
+    tags: ["Marketplace", "Trust and Safety", "AI"],
+    href: "https://flipdcampus.com/",
+  },
+  {
+    title: "PostaCare: Postnatal Depression Screening",
+    description: "Redesigned a screening workflow into a React tablet app across 10 WIC offices, processing 200+ assessments and cutting screening time by 70%.",
+    tags: ["React", "Python", "Health Tech"],
+    href: "https://n427.github.io/postacare/",
+    image: postacareImg,
+  },
+  {
     title: "Tagged: Weekly Photo Challenges",
     description: "Social app with server-based tags, streaks, punishments, and a Yearbook archive.",
     tags: ["SwiftUI", "Firebase", "Cloud Functions"],
     href: "https://apps.apple.com/ca/app/tagged/id6749673242",
     image: taggedImg,
   },
-  {
-    title: "Meta Glasses: Smart Glasses Prototypes",
-    description: "Led a consulting team evaluating Meta smart glasses use cases by building interactive prototypes.",
-    tags: ["Strategy", "User Research", "Figma"],
-    href: "https://btg-glasses.netlify.app/",
-    image: metaGlassesImg,
-  },
-  {
-    title: "PostaCare: Postnatal Depression Screening",
-    description: "Built a screening platform for WIC offices that processed 200+ assessments and reduced screening time by 70%.",
-    tags: ["React", "OpenAI API", "Health Tech"],
-    href: "https://n427.github.io/postacare/",
-    image: postacareImg,
-  },
 ] as const satisfies readonly WorkItem[];
 
 export const WORK_ITEMS: readonly WorkItem[] = [
-  ...INTERNSHIPS,
+  ...EDUCATION,
+  ...EXPERIENCE,
   ...RESEARCH,
   ...PROJECTS,
 ];

@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import PortfolioPage from "./page";
-import { INTERNSHIPS, PROJECTS, RESEARCH, WORK_ITEMS } from "./projects";
+import { EDUCATION, EXPERIENCE, PROJECTS, RESEARCH, WORK_ITEMS } from "./projects";
 
 vi.mock("next/image", () => ({
   default: ({
@@ -32,28 +32,33 @@ Object.defineProperty(window, "matchMedia", {
 afterEach(cleanup);
 
 describe("portfolio content", () => {
-  it("groups the approved work into internships, research, and projects", () => {
-    expect(INTERNSHIPS.map((item) => item.title)).toEqual([
-      "Meridian AI",
+  it("groups the approved work into education, experience, research, and projects", () => {
+    expect(EDUCATION.map((item) => item.title)).toEqual([
+      "University of Southern California",
+    ]);
+    expect(EXPERIENCE.map((item) => item.title)).toEqual([
+      "StudyFetch",
+      "Business Technology Group: Meta Glasses Strategy",
       "Evolution Design Lab",
+      "Dyrt: Waste Audit Tracking Platform",
+      "USC Annenberg, Dean's Office",
+      "Produ: SWE Soft-Skills Evaluator",
       "Jobflow: AI Resume Customizer",
       "Peekaboo: AI Visibility Analytics",
-      "Produ: SWE Soft-Skills Evaluator",
-      "Dyrt: Waste Audit Tracking Platform",
     ]);
     expect(RESEARCH.map((item) => item.title)).toEqual([
       "USC Image Processing and Informatics Lab",
       "Visual Cognition Lab: Research Dashboard",
     ]);
     expect(PROJECTS.map((item) => item.title)).toEqual([
-      "Tagged: Weekly Photo Challenges",
-      "Meta Glasses: Smart Glasses Prototypes",
+      "Flipd: USC Student Marketplace",
       "PostaCare: Postnatal Depression Screening",
+      "Tagged: Weekly Photo Challenges",
     ]);
   });
 
   it("provides useful descriptions and tools without em dashes", () => {
-    expect(WORK_ITEMS).toHaveLength(11);
+    expect(WORK_ITEMS).toHaveLength(14);
     for (const item of WORK_ITEMS) {
       expect(item.description.length).toBeGreaterThan(20);
       expect(item.tags.length).toBeGreaterThan(0);
@@ -62,34 +67,40 @@ describe("portfolio content", () => {
   });
 
   it("includes resume-sourced roles and dates for the new experience entries", () => {
-    expect(INTERNSHIPS[0]).toMatchObject({
-      title: "Meridian AI",
-      role: "Incoming AI Software Engineer",
-      date: "Sep 2026",
+    expect(EDUCATION[0]).toMatchObject({
+      role: "B.S. Computer Science and Business Administration",
+      date: "Expected May 2028",
+      tags: ["GPA 3.84"],
     });
-    expect(INTERNSHIPS[1]).toMatchObject({
+    expect(EXPERIENCE[0]).toMatchObject({
+      title: "StudyFetch",
+      role: "Incoming AI Product Management Intern",
+      date: "Jan 2027",
+    });
+    expect(EXPERIENCE[2]).toMatchObject({
       title: "Evolution Design Lab",
-      role: "Applied AI Engineer",
-      date: "May 2026 to present",
+      role: "Applied AI Engineer Intern",
+      date: "May 2026 to Sep 2026",
     });
     expect(RESEARCH[0]).toMatchObject({
       title: "USC Image Processing and Informatics Lab",
-      role: "Incoming Machine Learning Researcher",
-      date: "Sep 2026",
+      role: "Machine Learning Researcher",
+      date: "Sep 2026 to present",
     });
   });
 });
 
 describe("PortfolioPage", () => {
-  it("renders the three work sections, contact links, and all entries", () => {
+  it("renders the four work sections, contact links, and all entries", () => {
     const { container } = render(<PortfolioPage />);
     expect(screen.getByRole("heading", { level: 1, name: "Hi, I'm Nicole!" })).toBeVisible();
-    expect(screen.getByRole("heading", { level: 2, name: "internships" })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 2, name: "education" })).toBeVisible();
+    expect(screen.getByRole("heading", { level: 2, name: "experience" })).toBeVisible();
     expect(screen.getByRole("heading", { level: 2, name: "research" })).toBeVisible();
     expect(screen.getByRole("heading", { level: 2, name: "projects" })).toBeVisible();
     expect(screen.getByText("© 2026 Nicole Zhang")).toBeVisible();
-    expect(screen.getAllByTestId("work-item")).toHaveLength(11);
-    expect(screen.getAllByTestId("project-link")).toHaveLength(9);
+    expect(screen.getAllByTestId("work-item")).toHaveLength(14);
+    expect(screen.getAllByTestId("project-link")).toHaveLength(13);
     expect(container.querySelector(".section-heading")).toBeInTheDocument();
     expect(container.querySelector(".project-list")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "github opens in a new tab" })).toHaveAttribute(

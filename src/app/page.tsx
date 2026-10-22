@@ -3,7 +3,8 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import {
-  INTERNSHIPS,
+  EDUCATION,
+  EXPERIENCE,
   PROJECTS,
   RESEARCH,
   type WorkItem,
@@ -157,10 +158,16 @@ export default function PortfolioPage() {
       <main className="site-shell">
         <Intro />
       <WorkSection
-        id="internships"
-        title="internships"
+        id="education"
+        title="education"
+        description="coursework, scholarships, and competitions."
+        items={EDUCATION}
+      />
+      <WorkSection
+        id="experience"
+        title="experience"
         description="teams where I built, shipped, and learned."
-        items={INTERNSHIPS}
+        items={EXPERIENCE}
       />
       <WorkSection
         id="research"
